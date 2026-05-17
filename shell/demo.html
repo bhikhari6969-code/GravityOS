@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GravityOS</title>
+    <link rel="stylesheet" href="css/premium.css">
+</head>
+<body>
+<!-- ═══ BIOS Screen ═══ -->
+<div id="bios-screen">
+    <div id="bios-log"></div>
+</div>
+
+<!-- ═══ OOBE (First Boot) ═══ -->
+<div id="oobe-screen" style="display:none">
+    <div class="oobe-box glass-heavy">
+        <div class="oobe-logo">GRAVITY OS</div>
+        <div class="oobe-title">Welcome to Singularity</div>
+        <div class="oobe-desc">Create your primary capability token to continue.</div>
+        <input id="oobe-name" type="text" placeholder="Full Name" autocomplete="off">
+        <input id="oobe-pass" type="password" placeholder="Passphrase" autocomplete="off">
+        <button id="oobe-btn" onclick="finishOOBE()">INITIALIZE</button>
+    </div>
+</div>
+
+<!-- ═══ Login Screen ═══ -->
+<div id="login-screen" style="display:none">
+    <div id="login-time"></div>
+    <div id="login-date"></div>
+    <div id="login-avatar">N</div>
+    <div id="login-name">Nitin Raj</div>
+    <div id="login-input-wrap">
+        <input id="login-input" type="password" placeholder="Enter to unlock" autofocus>
+    </div>
+    <div id="login-hint">press enter or type anything</div>
+</div>
+
+<!-- ═══ Boot Splash ═══ -->
+<div id="boot-splash" style="display:none">
+    <div class="boot-logo">GRAVITY OS</div>
+    <div class="boot-bar"><div class="boot-bar-fill" id="boot-fill"></div></div>
+    <div class="boot-log" id="boot-log"></div>
+    <div class="boot-version">v0.1.0 — Codename Singularity</div>
+</div>
+
+<!-- ═══ Canvas Background ═══ -->
+<canvas id="gravity-canvas"></canvas>
+
+<!-- ═══ System Bar ═══ -->
+<div id="system-bar">
+    <div class="bar-section">
+        <span class="bar-wordmark">GRAVITYOS</span>
+    </div>
+    <div class="bar-section">
+        <span class="bar-clock" id="bar-clock"></span>
+    </div>
+    <div class="bar-section">
+        <span class="ai-indicator"><span class="ai-dot"></span> GRAVMIND</span>
+        <span class="bar-text" id="bar-cpu">CPU 8%</span>
+        <span class="bar-text" id="bar-mem">RAM 31%</span>
+        <span class="bar-text" id="bar-bat">BAT 94%</span>
+        <span class="bar-text" style="cursor:pointer" onclick="toggleNotifs()">⋮</span>
+    </div>
+</div>
+
+<!-- ═══ Desktop ═══ -->
+<div id="desktop"></div>
+
+<!-- ═══ Dock ═══ -->
+<div id="dock">
+    <button class="dock-btn" onclick="launchApp('terminal')"><span class="icon">▸_</span><span class="label">Term</span></button>
+    <button class="dock-btn" onclick="launchApp('files')"><span class="icon">📁</span><span class="label">Files</span></button>
+    <button class="dock-btn" onclick="launchApp('notes')"><span class="icon">📝</span><span class="label">Notes</span></button>
+    <button class="dock-btn" onclick="launchApp('browser')"><span class="icon">◎</span><span class="label">Browse</span></button>
+    <button class="dock-btn" onclick="launchApp('media')"><span class="icon">♫</span><span class="label">Media</span></button>
+    <button class="dock-btn" onclick="launchApp('settings')"><span class="icon">⚙</span><span class="label">Config</span></button>
+    <button class="dock-btn" onclick="launchApp('sysmon')"><span class="icon">♥</span><span class="label">Health</span></button>
+</div>
+
+<!-- ═══ Context Menu ═══ -->
+<div id="ctx-menu">
+    <div class="ctx-item" onclick="launchApp('terminal')">◻ Open Terminal <span class="shortcut">Ctrl+T</span></div>
+    <div class="ctx-item" onclick="launchApp('files')">◻ Files</div>
+    <div class="ctx-item" onclick="launchApp('settings')">◻ Settings</div>
+    <div class="ctx-sep"></div>
+    <div class="ctx-item" onclick="tileAll()">⊞ Tile Windows <span class="shortcut">Ctrl+G</span></div>
+    <div class="ctx-item" onclick="toggleField()">◐ Toggle Gravity Field</div>
+    <div class="ctx-sep"></div>
+    <div class="ctx-item" onclick="showAbout()">✦ About GravityOS</div>
+</div>
+
+<!-- ═══ Intent Shell ═══ -->
+<div id="intent-overlay">
+    <div id="intent-box" class="glass-heavy">
+        <div id="intent-input-row">
+            <span class="intent-icon">✦</span>
+            <input id="intent-field" type="text" placeholder="What would you like to do?" autocomplete="off" spellcheck="false">
+            <span class="intent-esc">ESC</span>
+        </div>
+        <div id="intent-results"></div>
+        <div id="intent-footer">
+            <span>GravMind</span>
+            <span id="intent-mem">0 memories</span>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ Toasts ═══ -->
+<div id="toasts"></div>
+
+<!-- ═══ Notification Panel ═══ -->
+<div id="notif-panel">
+    <div class="notif-header">Notifications</div>
+    <div class="notif-card">
+        <div class="notif-card-title">GravitySec</div>
+        <div class="notif-card-body">All systems nominal. 0 threats detected.</div>
+        <div class="notif-card-time">2 min ago</div>
+    </div>
+    <div class="notif-card">
+        <div class="notif-card-title">GravMind</div>
+        <div class="notif-card-body">AI model loaded — 7B INT4 on NPU. Ready.</div>
+        <div class="notif-card-time">5 min ago</div>
+    </div>
+    <div class="notif-card">
+        <div class="notif-card-title">System Update</div>
+        <div class="notif-card-body">GravityOS v0.1.1 available for download.</div>
+        <div class="notif-card-time">1 hr ago</div>
+    </div>
+</div>
+
+<script src="js/core.js"></script>
+<script src="js/apps-premium.js"></script>
+<script src="js/boot-intent.js"></script>
+</body>
+</html>

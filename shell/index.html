@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GravityOS — AI-native operating system. Zero-chrome. Universal compatibility.">
+    <title>GravityOS</title>
+    <link rel="stylesheet" href="css/gravity.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/shell.css">
+</head>
+<body id="gravity-shell">
+
+    <!-- Gravity Field — Physics-based particle wallpaper -->
+    <canvas id="gravity-field"></canvas>
+
+    <!-- Desktop Layer — Window container -->
+    <div id="desktop-layer"></div>
+
+    <!-- System Status Bar — Appears on hover at top edge -->
+    <div id="system-bar" class="g-glass">
+        <div id="system-bar-left">
+            <span id="gravity-wordmark" class="g-display">GravityOS</span>
+        </div>
+        <div id="system-bar-center">
+            <span id="system-clock" class="g-mono"></span>
+        </div>
+        <div id="system-bar-right">
+            <span id="ai-status" class="g-caption">
+                <span class="ai-dot anim-breathe"></span> GRAVMIND
+            </span>
+            <span id="cpu-indicator" class="g-mono g-caption"></span>
+            <span id="mem-indicator" class="g-mono g-caption"></span>
+            <span id="battery-indicator" class="g-mono g-caption"></span>
+        </div>
+    </div>
+
+    <!-- Intent Shell — AI-powered command interface (Ctrl+Space) -->
+    <div id="intent-overlay" class="hidden">
+        <div id="intent-shell" class="g-glass-heavy">
+            <div id="intent-header">
+                <span class="intent-icon">✦</span>
+                <input id="intent-input" type="text" 
+                       placeholder="What would you like to do?"
+                       autocomplete="off" spellcheck="false">
+                <span id="intent-shortcut" class="g-caption g-mono">ESC</span>
+            </div>
+            <div id="intent-results"></div>
+            <div id="intent-footer">
+                <span class="g-caption">GravMind</span>
+                <span class="g-caption g-mono" id="intent-context-count"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Window Switcher — Appears on gesture/Alt+Tab -->
+    <div id="window-switcher" class="hidden g-glass-heavy">
+        <div id="switcher-list"></div>
+    </div>
+
+    <!-- Notification Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- App Dock — Appears on bottom edge hover -->
+    <div id="app-dock" class="g-glass">
+        <button class="dock-item" data-app="notes" title="GravNote">
+            <span class="dock-icon">📝</span>
+            <span class="dock-label g-caption">Notes</span>
+        </button>
+        <button class="dock-item" data-app="files" title="GravFiles">
+            <span class="dock-icon">📁</span>
+            <span class="dock-label g-caption">Files</span>
+        </button>
+        <button class="dock-item" data-app="browser" title="GravBrowser">
+            <span class="dock-icon">🌐</span>
+            <span class="dock-label g-caption">Browser</span>
+        </button>
+        <button class="dock-item" data-app="terminal" title="GravTerminal">
+            <span class="dock-icon">▸_</span>
+            <span class="dock-label g-caption">Terminal</span>
+        </button>
+        <button class="dock-item" data-app="media" title="GravMedia">
+            <span class="dock-icon">♫</span>
+            <span class="dock-label g-caption">Media</span>
+        </button>
+        <button class="dock-item" data-app="settings" title="Settings">
+            <span class="dock-icon">⚙</span>
+            <span class="dock-label g-caption">Settings</span>
+        </button>
+    </div>
+
+    <!-- Boot Splash (shown on first load) -->
+    <div id="boot-splash">
+        <div id="boot-content">
+            <div id="boot-logo" class="g-display">G</div>
+            <div id="boot-text" class="g-display">GravityOS</div>
+            <div id="boot-version" class="g-caption g-mono">v0.1.0 SINGULARITY</div>
+            <div id="boot-progress">
+                <div id="boot-progress-bar"></div>
+            </div>
+            <div id="boot-status" class="g-mono"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/gravity-field.js"></script>
+    <script src="js/window-manager.js"></script>
+    <script src="js/intent-shell.js"></script>
+    <script src="js/gesture-engine.js"></script>
+    <script src="js/apps.js"></script>
+    <script src="js/shell.js"></script>
+</body>
+</html>

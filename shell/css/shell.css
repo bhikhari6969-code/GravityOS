@@ -1,0 +1,630 @@
+/*
+ * GravityOS — Shell Stylesheet
+ * shell.css — Layout and component styles for GravityShell
+ * Zero-chrome: everything appears on demand.
+ * Copyright (c) 2026 GravityOS Contributors — MIT License
+ */
+
+/* ═══════ Canvas Wallpaper ═══════ */
+#gravity-field {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+}
+
+/* ═══════ Desktop Layer ═══════ */
+#desktop-layer {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: var(--g-z-base);
+}
+
+/* ═══════ System Bar (top edge — proximity reveal) ═══════ */
+#system-bar {
+    position: fixed;
+    top: -48px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 36px;
+    padding: 0 var(--g-space-6);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--g-space-8);
+    z-index: var(--g-z-system);
+    border-radius: 0 0 var(--g-radius-lg) var(--g-radius-lg);
+    border-top: none;
+    min-width: 500px;
+    max-width: 800px;
+    width: auto;
+    transition: top 0.3s var(--g-ease-out);
+}
+
+#system-bar.visible,
+body:not(.booting) #system-bar:hover {
+    top: 0;
+}
+
+/* Show bar when mouse near top edge */
+#system-bar-trigger {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    z-index: calc(var(--g-z-system) - 1);
+}
+
+#system-bar-left, #system-bar-center, #system-bar-right {
+    display: flex;
+    align-items: center;
+    gap: var(--g-space-3);
+}
+
+#gravity-wordmark {
+    font-size: var(--g-text-sm);
+    letter-spacing: var(--g-tracking-ultra);
+    color: var(--g-text-secondary);
+    font-weight: var(--g-weight-light);
+}
+
+#system-clock {
+    font-size: var(--g-text-sm);
+    color: var(--g-text-primary);
+}
+
+.ai-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--g-text-primary);
+    border-radius: 50%;
+    margin-right: var(--g-space-1);
+}
+
+#cpu-indicator, #mem-indicator, #battery-indicator {
+    color: var(--g-text-tertiary);
+    font-size: var(--g-text-xs);
+}
+
+/* ═══════ Intent Shell ═══════ */
+#intent-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 20vh;
+    z-index: var(--g-z-intent);
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+#intent-overlay.hidden {
+    display: none;
+}
+
+#intent-shell {
+    width: 600px;
+    max-width: 90vw;
+    border-radius: var(--g-radius-xl);
+    overflow: hidden;
+}
+
+#intent-header {
+    display: flex;
+    align-items: center;
+    padding: var(--g-space-5) var(--g-space-6);
+    gap: var(--g-space-3);
+    border-bottom: 1px solid var(--g-border-subtle);
+}
+
+.intent-icon {
+    font-size: var(--g-text-xl);
+    opacity: 0.6;
+}
+
+#intent-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: var(--g-font-display);
+    font-size: var(--g-text-lg);
+    font-weight: var(--g-weight-light);
+    color: var(--g-text-bright);
+    letter-spacing: var(--g-tracking-tight);
+}
+
+#intent-input::placeholder {
+    color: var(--g-text-tertiary);
+}
+
+#intent-shortcut {
+    padding: 2px 8px;
+    background: var(--g-bg-surface);
+    border-radius: var(--g-radius-sm);
+    color: var(--g-text-tertiary);
+    font-size: 10px;
+}
+
+#intent-results {
+    max-height: 360px;
+    overflow-y: auto;
+}
+
+.intent-result {
+    display: flex;
+    align-items: center;
+    padding: var(--g-space-3) var(--g-space-6);
+    gap: var(--g-space-4);
+    cursor: pointer;
+    transition: background var(--g-duration-instant) ease;
+    border-bottom: 1px solid var(--g-border-subtle);
+}
+
+.intent-result:hover, .intent-result.selected {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.intent-result-icon {
+    width: 36px; height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--g-bg-surface);
+    border-radius: var(--g-radius-md);
+    font-size: var(--g-text-lg);
+    flex-shrink: 0;
+}
+
+.intent-result-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.intent-result-title {
+    font-weight: var(--g-weight-medium);
+    font-size: var(--g-text-base);
+    color: var(--g-text-primary);
+}
+
+.intent-result-subtitle {
+    font-size: var(--g-text-xs);
+    color: var(--g-text-tertiary);
+    margin-top: 2px;
+}
+
+.intent-result-action {
+    font-size: var(--g-text-xs);
+    color: var(--g-text-tertiary);
+    font-family: var(--g-font-mono);
+    padding: 2px 6px;
+    background: var(--g-bg-surface);
+    border-radius: var(--g-radius-sm);
+}
+
+#intent-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--g-space-3) var(--g-space-6);
+    border-top: 1px solid var(--g-border-subtle);
+}
+
+/* ═══════ App Dock (bottom edge — proximity reveal) ═══════ */
+#app-dock {
+    position: fixed;
+    bottom: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: var(--g-space-2);
+    padding: var(--g-space-2) var(--g-space-4);
+    z-index: var(--g-z-overlay);
+    border-radius: var(--g-radius-xl) var(--g-radius-xl) 0 0;
+    border-bottom: none;
+    transition: bottom 0.3s var(--g-ease-out);
+}
+
+#app-dock.visible {
+    bottom: 0;
+}
+
+.dock-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: var(--g-space-2) var(--g-space-3);
+    background: transparent;
+    border: none;
+    border-radius: var(--g-radius-md);
+    cursor: pointer;
+    transition: all var(--g-duration-fast) var(--g-ease-out);
+    color: var(--g-text-primary);
+    min-width: 56px;
+}
+
+.dock-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-4px) scale(1.1);
+}
+
+.dock-item:active {
+    transform: translateY(-2px) scale(1.05);
+}
+
+.dock-icon {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.dock-label {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+}
+
+/* ═══════ Window Chrome ═══════ */
+.grav-window {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--g-radius-lg);
+    overflow: hidden;
+    background: var(--g-bg-elevated);
+    border: 1px solid var(--g-border);
+    box-shadow: var(--g-shadow-xl);
+    min-width: 320px;
+    min-height: 200px;
+    resize: both;
+}
+
+.grav-window.focused {
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: var(--g-shadow-xl), 0 0 60px rgba(255,255,255,0.02);
+    z-index: 100;
+}
+
+.window-titlebar {
+    display: flex;
+    align-items: center;
+    height: 38px;
+    padding: 0 var(--g-space-3);
+    gap: var(--g-space-3);
+    background: var(--g-bg-surface);
+    border-bottom: 1px solid var(--g-border-subtle);
+    cursor: grab;
+    flex-shrink: 0;
+    user-select: none;
+}
+
+.window-titlebar:active { cursor: grabbing; }
+
+.window-controls {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.window-btn {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    opacity: 0.4;
+}
+
+.grav-window:hover .window-btn { opacity: 1; }
+
+.window-btn.close    { background: #ff5f57; }
+.window-btn.minimize { background: #ffbd2e; }
+.window-btn.maximize { background: #28c840; }
+
+.window-title {
+    flex: 1;
+    text-align: center;
+    font-size: var(--g-text-sm);
+    color: var(--g-text-secondary);
+    font-weight: var(--g-weight-medium);
+    letter-spacing: var(--g-tracking-wide);
+    text-transform: uppercase;
+    font-size: 10px;
+}
+
+.window-body {
+    flex: 1;
+    overflow: auto;
+    padding: var(--g-space-4);
+    position: relative;
+}
+
+/* ═══════ Window Switcher ═══════ */
+#window-switcher {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: var(--g-space-4);
+    border-radius: var(--g-radius-xl);
+    z-index: var(--g-z-modal);
+}
+
+#window-switcher.hidden { display: none; }
+
+#switcher-list {
+    display: flex;
+    gap: var(--g-space-3);
+}
+
+.switcher-item {
+    width: 180px;
+    padding: var(--g-space-3);
+    border-radius: var(--g-radius-md);
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.15s;
+    border: 1px solid transparent;
+}
+
+.switcher-item.selected {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--g-border);
+}
+
+.switcher-item-title {
+    font-size: var(--g-text-sm);
+    color: var(--g-text-primary);
+    margin-top: var(--g-space-2);
+}
+
+/* ═══════ Toast Notifications ═══════ */
+#toast-container {
+    position: fixed;
+    top: var(--g-space-6);
+    right: var(--g-space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--g-space-3);
+    z-index: var(--g-z-toast);
+    pointer-events: none;
+}
+
+.toast {
+    padding: var(--g-space-3) var(--g-space-5);
+    border-radius: var(--g-radius-md);
+    font-size: var(--g-text-sm);
+    pointer-events: auto;
+    max-width: 360px;
+}
+
+/* ═══════ Boot Splash ═══════ */
+#boot-splash {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--g-black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--g-z-max);
+    transition: opacity 0.8s var(--g-ease-out);
+}
+
+#boot-splash.done {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#boot-content {
+    text-align: center;
+}
+
+#boot-logo {
+    font-size: 80px;
+    font-weight: var(--g-weight-light);
+    color: var(--g-text-bright);
+    margin-bottom: var(--g-space-4);
+    letter-spacing: var(--g-tracking-tight);
+}
+
+#boot-text {
+    font-size: var(--g-text-2xl);
+    color: var(--g-text-primary);
+    font-weight: var(--g-weight-light);
+    letter-spacing: var(--g-tracking-ultra);
+    margin-bottom: var(--g-space-6);
+}
+
+#boot-version {
+    margin-bottom: var(--g-space-8);
+    color: var(--g-text-tertiary);
+}
+
+#boot-progress {
+    width: 200px;
+    height: 2px;
+    background: var(--g-border);
+    border-radius: 1px;
+    margin: 0 auto var(--g-space-4);
+    overflow: hidden;
+}
+
+#boot-progress-bar {
+    width: 0%;
+    height: 100%;
+    background: var(--g-text-primary);
+    transition: width 0.3s var(--g-ease-out);
+}
+
+#boot-status {
+    font-size: var(--g-text-xs);
+    color: var(--g-text-tertiary);
+    height: 16px;
+}
+
+/* ═══════ Cursor Glow (follows mouse on desktop) ═══════ */
+#cursor-glow {
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(255,255,255,0.015) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    transition: none;
+}
+
+/* ═══════ Hidden Utility ═══════ */
+.hidden { display: none !important; }
+
+/* ═══════ App-Specific Styles ═══════ */
+
+/* Notes App */
+.app-notes textarea {
+    width: 100%; height: 100%;
+    background: transparent;
+    border: none; outline: none;
+    color: var(--g-text-primary);
+    font-family: var(--g-font-ui);
+    font-size: var(--g-text-base);
+    line-height: var(--g-leading-loose);
+    resize: none;
+}
+
+/* Terminal App */
+.app-terminal {
+    background: var(--g-black);
+    font-family: var(--g-font-mono);
+    font-size: var(--g-text-sm);
+    color: #00ff00;
+    padding: var(--g-space-4);
+    overflow-y: auto;
+}
+
+.terminal-line { margin-bottom: 2px; }
+.terminal-prompt { color: var(--g-text-secondary); }
+.terminal-cursor {
+    display: inline-block;
+    width: 8px; height: 16px;
+    background: #00ff00;
+    animation: loadingPulse 1s step-start infinite;
+}
+
+/* Files App */
+.file-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: var(--g-space-4);
+}
+
+.file-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--g-space-3);
+    border-radius: var(--g-radius-md);
+    cursor: pointer;
+    transition: background 0.15s;
+    gap: var(--g-space-2);
+}
+
+.file-item:hover { background: var(--g-bg-hover); }
+.file-item-icon { font-size: 32px; }
+.file-item-name {
+    font-size: var(--g-text-xs);
+    color: var(--g-text-secondary);
+    text-align: center;
+    word-break: break-all;
+}
+
+/* Browser App */
+.browser-toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--g-space-2);
+    padding: var(--g-space-2);
+    background: var(--g-bg-surface);
+    border-bottom: 1px solid var(--g-border-subtle);
+}
+
+.browser-url {
+    flex: 1;
+    background: var(--g-bg);
+    border: 1px solid var(--g-border);
+    border-radius: var(--g-radius-full);
+    padding: var(--g-space-1) var(--g-space-4);
+    color: var(--g-text-primary);
+    font-family: var(--g-font-mono);
+    font-size: var(--g-text-sm);
+    outline: none;
+}
+
+.browser-url:focus { border-color: rgba(255,255,255,0.15); }
+
+.browser-btn {
+    background: transparent;
+    border: none;
+    color: var(--g-text-secondary);
+    cursor: pointer;
+    padding: var(--g-space-1);
+    font-size: var(--g-text-lg);
+    border-radius: var(--g-radius-sm);
+    transition: background 0.15s;
+}
+
+.browser-btn:hover { background: var(--g-bg-hover); }
+
+/* Settings App */
+.settings-section {
+    margin-bottom: var(--g-space-6);
+}
+
+.settings-title {
+    font-size: var(--g-text-xs);
+    color: var(--g-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: var(--g-tracking-wide);
+    margin-bottom: var(--g-space-3);
+}
+
+.settings-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--g-space-3) 0;
+    border-bottom: 1px solid var(--g-border-subtle);
+}
+
+.settings-label { color: var(--g-text-primary); }
+.settings-value { color: var(--g-text-secondary); font-family: var(--g-font-mono); font-size: var(--g-text-sm); }
+
+/* Toggle Switch */
+.toggle {
+    width: 40px; height: 22px;
+    background: var(--g-border);
+    border-radius: var(--g-radius-full);
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.toggle.on { background: var(--g-text-primary); }
+
+.toggle::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 16px; height: 16px;
+    background: var(--g-bg);
+    border-radius: 50%;
+    transition: transform 0.2s var(--g-ease-spring);
+}
+
+.toggle.on::after { transform: translateX(18px); }

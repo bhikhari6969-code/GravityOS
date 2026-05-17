@@ -1,0 +1,224 @@
+/*
+ * GravityOS — Design System
+ * gravity.css — Core design tokens, zero-chrome philosophy
+ * Typography as identity. Monochrome default. Wabi-sabi minimalism.
+ * Copyright (c) 2026 GravityOS Contributors — MIT License
+ */
+
+/* ═══════ Font Loading ═══════ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600&family=Outfit:wght@200;300;400;500;600;700;800;900&display=swap');
+
+/* ═══════ CSS Custom Properties (Design Tokens) ═══════ */
+:root {
+    /* ── Color System: Monochrome ── */
+    --g-black:          #050505;
+    --g-bg:             #0a0a0a;
+    --g-bg-elevated:    #111111;
+    --g-bg-surface:     #161616;
+    --g-bg-hover:       #1c1c1c;
+    --g-border:         #222222;
+    --g-border-subtle:  #1a1a1a;
+    --g-text-tertiary:  #484848;
+    --g-text-secondary: #888888;
+    --g-text-primary:   #e8e8e8;
+    --g-text-bright:    #fafafa;
+    --g-white:          #ffffff;
+
+    /* ── Accent Colors (optional, user-configurable) ── */
+    --g-accent:         #ffffff;
+    --g-accent-dim:     rgba(255, 255, 255, 0.08);
+    --g-accent-glow:    rgba(255, 255, 255, 0.04);
+
+    /* ── Typography ── */
+    --g-font-ui:        'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --g-font-display:   'Outfit', 'Inter', sans-serif;
+    --g-font-mono:      'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+    --g-text-xs:        0.6875rem;   /* 11px */
+    --g-text-sm:        0.8125rem;   /* 13px */
+    --g-text-base:      0.9375rem;   /* 15px */
+    --g-text-lg:        1.125rem;    /* 18px */
+    --g-text-xl:        1.5rem;      /* 24px */
+    --g-text-2xl:       2rem;        /* 32px */
+    --g-text-3xl:       2.75rem;     /* 44px */
+    --g-text-4xl:       3.75rem;     /* 60px */
+    --g-text-hero:      6rem;        /* 96px */
+
+    --g-weight-light:   300;
+    --g-weight-normal:  400;
+    --g-weight-medium:  500;
+    --g-weight-semi:    600;
+    --g-weight-bold:    700;
+    --g-weight-black:   900;
+
+    --g-leading-tight:  1.15;
+    --g-leading-normal: 1.5;
+    --g-leading-loose:  1.75;
+    --g-tracking-tight: -0.03em;
+    --g-tracking-normal: 0;
+    --g-tracking-wide:  0.05em;
+    --g-tracking-ultra: 0.15em;
+
+    /* ── Spacing (4px grid) ── */
+    --g-space-1:  4px;
+    --g-space-2:  8px;
+    --g-space-3:  12px;
+    --g-space-4:  16px;
+    --g-space-5:  20px;
+    --g-space-6:  24px;
+    --g-space-8:  32px;
+    --g-space-10: 40px;
+    --g-space-12: 48px;
+    --g-space-16: 64px;
+    --g-space-20: 80px;
+
+    /* ── Radii ── */
+    --g-radius-sm:  6px;
+    --g-radius-md:  12px;
+    --g-radius-lg:  16px;
+    --g-radius-xl:  24px;
+    --g-radius-full: 9999px;
+
+    /* ── Elevation (Glassmorphism) ── */
+    --g-glass-bg:      rgba(255, 255, 255, 0.03);
+    --g-glass-bg-heavy: rgba(255, 255, 255, 0.06);
+    --g-glass-border:  rgba(255, 255, 255, 0.06);
+    --g-glass-blur:    24px;
+    --g-glass-blur-heavy: 48px;
+
+    --g-shadow-sm:   0 1px 2px rgba(0, 0, 0, 0.4);
+    --g-shadow-md:   0 4px 12px rgba(0, 0, 0, 0.5);
+    --g-shadow-lg:   0 8px 32px rgba(0, 0, 0, 0.6);
+    --g-shadow-xl:   0 16px 64px rgba(0, 0, 0, 0.7);
+    --g-shadow-glow: 0 0 40px rgba(255, 255, 255, 0.03);
+
+    /* ── Motion ── */
+    --g-ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+    --g-ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
+    --g-ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+    --g-ease-bounce:  cubic-bezier(0.68, -0.55, 0.27, 1.55);
+
+    --g-duration-instant: 100ms;
+    --g-duration-fast:    200ms;
+    --g-duration-normal:  300ms;
+    --g-duration-slow:    500ms;
+    --g-duration-glacial: 800ms;
+
+    /* ── Z-Index Scale ── */
+    --g-z-base:       1;
+    --g-z-dropdown:   100;
+    --g-z-sticky:     200;
+    --g-z-overlay:    300;
+    --g-z-modal:      400;
+    --g-z-popover:    500;
+    --g-z-toast:      600;
+    --g-z-intent:     700;
+    --g-z-system:     900;
+    --g-z-max:        9999;
+}
+
+/* ═══════ Reset & Base ═══════ */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    font-family: var(--g-font-ui);
+    font-size: var(--g-text-base);
+    font-weight: var(--g-weight-normal);
+    line-height: var(--g-leading-normal);
+    color: var(--g-text-primary);
+    background: var(--g-bg);
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    cursor: default;
+    user-select: none;
+}
+
+/* ═══════ Scrollbar (invisible by default) ═══════ */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: var(--g-border);
+    border-radius: var(--g-radius-full);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--g-text-tertiary); }
+
+/* ═══════ Selection ═══════ */
+::selection {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--g-white);
+}
+
+/* ═══════ Glass Surface ═══════ */
+.g-glass {
+    background: var(--g-glass-bg);
+    backdrop-filter: blur(var(--g-glass-blur));
+    -webkit-backdrop-filter: blur(var(--g-glass-blur));
+    border: 1px solid var(--g-glass-border);
+    border-radius: var(--g-radius-lg);
+    box-shadow: var(--g-shadow-lg), var(--g-shadow-glow);
+}
+
+.g-glass-heavy {
+    background: var(--g-glass-bg-heavy);
+    backdrop-filter: blur(var(--g-glass-blur-heavy));
+    -webkit-backdrop-filter: blur(var(--g-glass-blur-heavy));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--g-radius-lg);
+    box-shadow: var(--g-shadow-xl);
+}
+
+/* ═══════ Typography Classes ═══════ */
+.g-display {
+    font-family: var(--g-font-display);
+    font-weight: var(--g-weight-light);
+    letter-spacing: var(--g-tracking-tight);
+    line-height: var(--g-leading-tight);
+}
+
+.g-heading {
+    font-family: var(--g-font-display);
+    font-weight: var(--g-weight-semi);
+    letter-spacing: var(--g-tracking-tight);
+}
+
+.g-body { font-weight: var(--g-weight-normal); }
+
+.g-caption {
+    font-size: var(--g-text-xs);
+    color: var(--g-text-tertiary);
+    letter-spacing: var(--g-tracking-wide);
+    text-transform: uppercase;
+}
+
+.g-mono {
+    font-family: var(--g-font-mono);
+    font-size: var(--g-text-sm);
+}
+
+/* ═══════ Utility ═══════ */
+.g-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.g-fade-in {
+    animation: gFadeIn var(--g-duration-normal) var(--g-ease-out) forwards;
+    opacity: 0;
+}
+
+@keyframes gFadeIn {
+    to { opacity: 1; }
+}
