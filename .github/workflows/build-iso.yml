@@ -1,0 +1,28 @@
+name: Build GravityOS ISO
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-iso:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y live-build xorriso
+
+      - name: Make script executable
+        run: chmod +x build/build-iso.sh
+
+      - name: Build ISO
+        run: cd build && ./build-iso.sh
+
+      - name: Upload ISO Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: GravityOS-Singularity-ISO
+          path: build/GravityOS-v0.1.0-Singularity.iso
